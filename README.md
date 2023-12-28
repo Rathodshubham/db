@@ -16,6 +16,7 @@ daalll nnaaaaaaaaaaaaaaaa
  karri do min
 
 khaana khane gai thi sorry nhi toh kar deti
+ans sahi aarha kya ?
 
 
 
