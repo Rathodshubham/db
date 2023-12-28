@@ -1,0 +1,268 @@
+class Product {
+    int productId;
+    double productPrice;
+    int productQuantity;
+    String productName;
+
+    public Product(int id, double price, int quantity, String name) {
+        this.productId = id;
+        this.productPrice = price;
+        this.productQuantity = quantity;
+        this.productName = name;
+    }
+}
+
+class Node {
+    Product data;
+    Node next;
+
+    public Node(Product product) {
+        this.data = product;
+        this.next = null;
+    }
+}
+
+class CircularLinkedList {
+    private Node head;
+
+    // Insert by position
+    public void insertByPosition(int position, Product product) {
+        Node newNode = new Node(product);
+
+        if (head == null) {
+            head = newNode;
+            newNode.next = head;
+        } else {
+            Node temp = head;
+            for (int i = 1; i < position - 1; i++) {
+                temp = temp.next;
+            }
+            newNode.next = temp.next;
+            temp.next = newNode;
+        }
+    }
+
+    // Insert by value
+    public void insertByValue(Product product) {
+        Node newNode = new Node(product);
+
+        if (head == null) {
+            head = newNode;
+            newNode.next = head;
+        } else {
+            Node temp = head;
+            while (temp.next != head) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+            newNode.next = head;
+        }
+    }
+
+    // Delete by position
+    public void deleteByPosition(int position) {
+        if (head == null)
+            return;
+
+        Node temp = head;
+
+        if (position == 1) {
+            while (temp.next != head)
+                temp = temp.next;
+
+            temp.next = head.next;
+            head = head.next;
+        } else {
+            for (int i = 1; i < position - 1; i++)
+                temp = temp.next;
+
+            temp.next = temp.next.next;
+        }
+    }
+
+    // Delete by value
+    public void deleteByValue(Product product) {
+        if (head == null)
+            return;
+
+        Node temp = head;
+
+        while (temp.next != head && temp.next.data != product)
+            temp = temp.next;
+
+        temp.next = temp.next.next;
+    }
+
+    // Find the middle
+    public void findMiddle() {
+        if (head == null)
+            return;
+
+        Node slow = head;
+        Node fast = head;
+
+        while (fast.next != head && fast.next.next != head) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        System.out.println("Middle Product: " + slow.data.productName);
+    }
+
+    // Search by product name
+    public void searchByProductName(String productName) {
+        if (head == null)
+            return;
+
+        Node temp = head;
+
+        do {
+            if (temp.data.productName.equals(productName)) {
+                System.out.println("Product Found: " + temp.data.productName);
+                return;
+            }
+            temp = temp.next;
+        } while (temp != head);
+
+        System.out.println("Product not found.");
+    }
+
+    // Delete alternate nodes
+    public void deleteAlternateNodes() {
+        if (head == null)
+            return;
+
+        Node current = head;
+
+        do {
+            current.next = current.next.next;
+            current = current.next;
+        } while (current.next != head);
+    }
+
+    // Sort in descending order and display
+    public void sortAndDisplayDescending() {
+        if (head == null)
+            return;
+
+        Node current = head;
+        Node index = null;
+        Product temp;
+
+        do {
+            index = current.next;
+
+            while (index != head) {
+                if (index.data.productPrice > current.data.productPrice) {
+                    temp = current.data;
+                    current.data = index.data;
+                    index.data = temp;
+                }
+                index = index.next;
+            }
+
+            current = current.next;
+        } while (current != head);
+
+        display();
+    }
+
+    // Display all nodes from the 3rd last node
+    public void displayFromThirdLast() {
+        if (head == null)
+            return;
+
+        Node temp = head;
+        int count = 0;
+
+        do {
+            count++;
+            temp = temp.next;
+        } while (temp != head);
+
+        if (count < 3)
+            return;
+
+        temp = head;
+
+        for (int i = 1; i <= count - 3; i++)
+            temp = temp.next;
+
+        do {
+            System.out.println(temp.data.productName);
+            temp = temp.next;
+        } while (temp != head);
+    }
+
+    // Display all nodes
+    public void display() {
+        if (head == null)
+            return;
+
+        Node temp = head;
+
+        do {
+            System.out.println("ID: " + temp.data.productId + ", Name: " + temp.data.productName + ", Price: "
+                    + temp.data.productPrice + ", Quantity: " + temp.data.productQuantity);
+            temp = temp.next;
+        } while (temp != head);
+    }
+
+    // Print all nodes in reverse order
+    public void printReverse() {
+        printReverseHelper(head);
+    }
+
+    private void printReverseHelper(Node node) {
+        if (node == null)
+            return;
+
+        printReverseHelper(node.next);
+        System.out.println("ID: " + node.data.productId + ", Name: " + node.data.productName + ", Price: "
+                + node.data.productPrice + ", Quantity: " + node.data.productQuantity);
+    }
+}
+
+public class CircularLinkedListExample {
+    public static void main(String[] args) {
+        CircularLinkedList circularList = new CircularLinkedList();
+
+        // Inserting elements
+        circularList.insertByValue(new Product(1, 10.0, 5, "ProductA"));
+        circularList.insertByValue(new Product(2, 15.0, 3, "ProductB"));
+        circularList.insertByValue(new Product(3, 20.0, 8, "ProductC"));
+        circularList.insertByValue(new Product(4, 12.0, 6, "ProductD"));
+        circularList.insertByValue(new Product(5, 18.0, 4, "ProductE"));
+
+        // Displaying all nodes
+        System.out.println("All nodes:");
+        circularList.display();
+
+        // Inserting by position
+        circularList.insertByPosition(3, new Product(6, 25.0, 7, "ProductF"));
+
+        // Deleting by value
+        circularList.deleteByValue(new Product(2, 15.0, 3, "ProductB"));
+
+        // Deleting by position
+        circularList.deleteByPosition(4);
+
+        // Finding the middle
+        circularList.findMiddle();
+
+        // Searching by product name
+        circularList.searchByProductName("ProductA");
+
+        // Deleting alternate nodes
+        circularList.deleteAlternateNodes();
+
+        // Sorting in descending order and displaying
+        System.out.println("Sorted in descending order:");
+        circularList.sortAndDisplayDescending();
+
+        // Displaying all nodes from the 3rd last node
+        System.out.println("Nodes from the 3rd last node:");
+        circularList.displayFromThirdLast();
+
+        // Displaying all nodes in reverse order
+        System.out.println("Nodes in reverse order
