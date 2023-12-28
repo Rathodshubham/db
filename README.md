@@ -13,6 +13,7 @@ find the middle
 //   display all nodes 
 //   print all nodes in reverse order
 daalll nnaaaaaaaaaaaaaaaa
+ karri do min
 
 
 
