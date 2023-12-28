@@ -12,6 +12,7 @@ find the middle
 //   display all nodes of list from 3rd last node
 //   display all nodes 
 //   print all nodes in reverse order
+daalll nnaaaaaaaaaaaaaaaa
 
 
 
